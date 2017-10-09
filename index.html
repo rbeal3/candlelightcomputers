@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+		<!--
+		Author: Ryan Beal
+			-->
+	<META http-equiv="Content-Style-Type" content="text/css">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+	<title>Home</title>
+</head>
+<body>
+
+<div class="nav">
+	<ul>
+		<li> <a class="transition" href="./about.html">Home</a> </li>
+		<!-- <li> <a href="./kelsey">Kelesy</a> </li> -->
+		<li> <a class="transition" href="./CSCI.html">Computer Science</a> </li>
+		<li> <a class="transition" href="./3dCollection.html">3D Design</a> </li>
+		<li> <a class="transition" href="./cadCollection.html">AutoCad</a> </li>
+		<li> <a class="transition" href="./vimNotes.html">My Vim Tips</a> </li>
+	</ul>
+</div><!--/nav-->
+
+
+<div class="content">
+
+
+</div><!--/column_1-->
+
+
+<div class="footer">
+</div><!--/footer-->
+
+<script>
+
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+    $(".content").load("about.html");
+   $("[id^='aws']").css("display", "none"); //for ponyisasquare.9f.com
+
+ 
+    $("a.transition").click(function(event){
+        event.preventDefault();
+        linkLocation = this.href;
+        $(".content").fadeOut(1000, redirectPage);      
+       
+    });
+    
+    function redirectPage() {
+        //window.frameElement = linkLocation;
+          console.log("redirecting")
+          $(".content")
+	  	  .attr({"scrolling": "no"})
+		  .load(linkLocation, function() {
+	         $("[id^='aws']").css("display", "none"); //for ponyisasquare.9f.com
+	         console.log("link was loaded")
+		    $(this).fadeIn(2000);
+		  });
+    }
+});
+</script>
+
+</body>
+</html>

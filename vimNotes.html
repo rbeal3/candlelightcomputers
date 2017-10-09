@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<head>
+	<title>Vim Tips</title>	  
+
+</head>
+<style>
+	body {
+		background:#C0C0C0;
+	}
+	pre {
+	white-space:pre-wrap;
+		}
+</style>
+<body>
+<h1>Guide on VIM </h1>
+<pre>
+
+In my experience a lot of confusion and bickering where vim in conscerned comes from people not knowing the single letter commands. Therefore, I present to you a comprehensive list of all the single letter commands, as well as some other useful tidbits. These notes are intended for beginner-intermediate Vim users, but may contain a few advanced features as well.
+
+things you should know:
+If you are a<sub>n</sub> <strike>super noob</strike> ultimate beginner, you should check out this <a href="https://wiki.gentoo.org/wiki/Vim/Learning">ultimate beginner</a>'s guide :)
+Or you can check out this <a href="http://www.fprintf.net/vimCheatSheet.html">Beginner Cheat Sheet</a>
+&ltCR&gt means carrage return... AKA ENTER!
+If you have any questions ask google... How do you think I figured all this out?
+
+
+Symbols have all their own meanings, often associated with a movement or particular operation (&ltlink&gtsee below&ltlink&gt for a more full explanation)
+
+escape mode: the program opens in this mode. You will do almost all modifying of the text from this mode. The only thing you cannot do from this mode is insert text. Press "i" to insert text.
+insert mode: You can basically only write text in this mode. You should not generally try to do anything else until you learn the program better. Pressing &ltEsc&gt will bring you back to normal(escape) mode. 
+
+
+<h3 id=colon>colon commands<h3>
+	:q = quit (exits current file)
+	:q! = force quit
+	:w = save
+	:143 = goto line 143
+many commands may be combined
+	:wqa = save and quit all windows
+	:tabnew . (enters file select (use jk for movement and enter to select dir/file /.. means up one dir)) 
+And for you sad cretins who feel the need to use your mouse... a for "all"
+	:set mouse=a
+
+in esc mode
+a = append after character
+b = back to the first char of the previous word (counts symbols seperately)
+c = Change (must be used with a movement command [hjklw$^]) deletes, and puts into insert mode
+	ex:cb=change previous word, cw=Change word, cc=change line
+d = Delete (must be used with a movement
+	d*2=delete line
+e = move to next symbol, or end of current word
+f = find character after cursor in current line
+	note: . does not redo find but will redo commands with find as the distance eg: dfg = delete from current to the next "g"
+g = is often used for making movement commands work on the visible space. 
+	gg=goto top of file
+	gt=change tab
+	gj=visual down (navigate across a soft return)
+	g$=end of line(works like &ltend&gt in most editors)
+h = move 1 char left
+i = insert mode(inserts before current square)
+j = move 1 char down (do nj to move n lines down)
+k = move 1 char up
+m = mark current line and position	mark character tag (a-z for local file A-Z for Universal mark)
+	special: '.=move to line where last change occoured
+	special: ''=Jump to where cursor was before last jump
+	for more details check out: <a href="http://vim.wikia.com/wiki/Using_marks">vim.wikia/marks</a>
+n = move to next search thing (use /foo to find foo in text)
+o = open line below
+p = paste clipboard below 
+q = record a macro
+r = replace a single char with your next char press
+s = substitiute (effectively xi)
+t = same as "f" but cursor 
+	used like dt* =  delete up to "*"
+u = undo ( &ltctrl&gtr = redo)
+v = puts you in visual select mode. Move around to select text
+	vjjU= select 2 lines and uppercase them all.
+	vGd= delete from cursor to end of file
+x = delete char under cursor
+y = coppies highlighted text to buffer 
+	y*2= copy current line (just like Y)
+z = move screen to put cursor
+	zt|z&ltCR&gt = top; zz|z. = center; zb|z-=bottom
+
+A = append at end of line (effectively $a)
+B = jump back a word (defined by whitespace)
+C = delete to end of line and insert mode(effectively d$a)
+D = delete to end of line (effectively d$)
+E = Move to just before the next white space 
+F = backwards version of "f"	character to find
+G = Go to bottom of file
+H = Head. move cursor to first line on screen
+I = Insert just before first non blank char (effectively ^i)
+J = Join. Delete white space between this and next line.
+L = move cursor to last line of screen
+K = opens the man page of word under cursor
+M = Move cursor to middle of screen
+N = goto previous search (if you did a /find)
+O = Open new line above current
+P = Paste last yanked thing before cursor (if you yanked a line it will paste above, if you yank characters
+Q = enter : command mode (for entering multiple : commands, begeners:do not use)
+R = Replace (insert mode with clobber on)
+S = Substitute (insert mode and delete the current line)
+T = backwards version of "t"	character to find
+U = Reset line to state it was at when you moved to it 
+	also Uppercase text that is highlighted
+V = select a line for editing (use jk to highlight many) 
+W = Word jump. move to next word (defined by whitespace)
+X = deletechar before cursor
+Y = yank entire line
+Z*2 = save and quit (effectively :wq)
+
+SYMBOLS
+0 = move to column zero
+1-9 = add to commands to do multiple 
+	ex. 3&gt&gt 3dd
+&ltSPACE&gt = move right one character
+@ = execute macro(see q&ltletter&gt)
+$ = move to end of line
+% = go to matching paren[],(),{} 
+^ = move to first non-whitespace character of line
+	g_ move to last non-whitespace character of line 
+* = go to next instance of word under cursor
+# = go to previous instance of word under cursor
+) = move to next sentence
+( = move to previous sentence
+| = move to column zero
+- = move to first non-whitespace of previous line
++ = move to first non-whitespace of next line
+_ =  like ^ but numeric prefixes make 
+= = AUTOFORMATTING =G will autoformat from current position to end
+{ = move to previous empty line
+} = move to next empty line
+; = repeat previous f, F, t, or T command
+' = move to begening of marked line(see: m)
+` = move to the mark(see: m)
+: = used for entering special commands
+	:help Thing_you_want_help_on
+~ = invert case of current character and move cursor forward
+, = reverse direction of last "f", "F", "t", or "T" command
+. = repeat last command (that edited the text) (AWESOME)
+&lt&lt = unindent command	cursor motion command
+&gt&gt = indent command	cursor motion command
+/foo = locates foo in text (press n to go to next)
+:%s/foo/bar/ = find(/) and replace(%s) foo with bar (once per line) 
+:%s/foo/bar/g = find(/) and replace(%s) all instances(g) of foo with bar 
+
+visual mode commands: (selecting and manipulating arbitrary selections of text)
+A = 
+B = 
+M = 
+N =
+o/O = switch selection side
+P = 
+Q = 
+R = 
+S = 
+T = 
+u/U = lowercase or Uppercase 
+V = 
+W =
+X = 
+Y =
+Z =
+
+
+CTRL commands= most of these are not beginner commands. As such I have removed several of them
+	note:be careful to use these only in esc(normal) mode. Their functions are different in insert mode and they will probably just confuse you.
+
+&ltctrl&gta = increment the next number by one
+&ltctrl&gtb = back (up) a page
+&ltctrl&gtd = half screen down
+&ltctrl&gte = move screen up 1 line  
+&ltctrl&gtf = forward a page
+&ltctrl&gtg = display modified status 
+	from ins mode:&ltctrl&gtgj move up/down back into insert
+&ltctrl&gtl = refresh screen
+&ltctrl&gtm = begening of next line
+&ltctrl&gtn = cursor down one line
+&ltctrl&gtp = cursor up one line
+&ltctrl&gtu = half screen up
+&ltctrl&gtr = redo
+&ltctrl&gtu = move up half page
+&ltctrl&gtv = select text in a block (move commands needed)
+&ltctrl&gtw = WINDOW MANIPULATION!
+	ex. &ltctrl&gtws horizontal split on current file
+	ex. &ltctrl&gtwv for vertical split on current file  
+	help. &ltctrl&gtw [hjlk] change current window.
+	help. &ltctrl&gtw [+ or -] resize window by one line.
+	help. &ltctrl&gtw [r or R] rearange windows by rotating them 
+&ltctrl&gtx = Decrement the next number by one
+&ltctrl&gty = Move screen down 1 line
+&ltctrl&gtz = Suspend program (type fg in colsole to bring it back to the foreground) 
+
+
+Most commands can be prefixed with a multidigit number, that influences the way the command works. There is generally no consequence if numbers don't work with a command so try it any time you want to do an operation more than once.
+G	goto nth line number
+n| = goto nth column number
+ns = substitute for next n characters
+n&lt&lt = shift n lines left one shiftwidth
+nj advance n lines
+
+Helpful links 
+<a href="http://vim.wikia.com/wiki/">http://vim.wikia.com/wiki/</a> Special thanks to the vim wiki
+
+<a href="http://www.openvim.com/ "> interactive vim tutorial </a>
+
+<a href=" http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim?rq=1">
+stackoverflow's most productive shortcut</a>
+
+My personal notes =-------------------------------------
+
+<hr>
+from command line $vim -p open args in tabs
+
+:so %		(from .vimrc) reload vimrc
+]s			Next word from spell check
+[s  		Prev word if spell check is on
+gt				next tab
+:!pwd			execute pwd and return to vim
+!!pwd			execute pwd and insert it in vim
+:sh				use the shell for a couple of commands $exit to return
+:r file		insert content of file at current line
+:1,10			w outfile	Saves lines 1 to 10 in outfile
+:sp .			horizontal split screen(sp) and look in current directory(.) for a file
+:vsp			vertical split screen
+:1,10			w &gt&gt outfile	Appends lines 1 to 10 to outfile
+Ctrl-A		will increment the number under the cursor
+Ctrl-X	  will decrement the number under the cursor
+ctrl+v		visual block. use &ltI&gt text &ltesc&gt (text will show upon esc press
+q&ltletter&gt records a macro. (must press q to end)
+@&ltletter&gt plays it back.
+]p 				paste block in line with other text
+&gt%				indent to the match of ( { [
+/word&ltCR&gt= searches for "word" in document
+	n=next match, N=previous match
+	/word\c search case insensitive
+
+ways to do commands in blocks
+&ltctrl&gt
+:.,126d		#from current line(.)to 126 delete
+:,126d		#from current line(.)to 126 delete
+d126G			#delete from current to 126, Go
+65,126d		#deletes from line 65 to 126
+<hr>
+
+
+
+below is my <a href="http://candlelightcomputers.com/vimrc"> .vimrc </a> It's pretty much all I need, and when on a new computer I run wget to grab it before I do anything in vim.
+	 
+
+<hr>
+"this is a .vimrc comment
+set number
+color desert
+set tabstop=2
+set shiftwidth=2
+set autoindent
+"set cmdheight=2 this keeps you from having to hit enter to continue in many cases, But it just looks funkey
+set ruler
+syntax enable
+
+"Dialogue upon failed commands (like :q) Go ahead and try it, it's cool.
+	set confirm
+
+imap jk &ltEsc&gt
+imap jj &ltEsc&gt
+imap kk &ltEsc&gt
+	"i use ^these^ so I don't have to take my fingers off the keys to hit &ltesc&gt
+"toggle mouse manipulation
+	"mouse on
+		map ,m :set mouse=a&ltCR&gt	
+	"mouse off
+		map ,M :set mouse=&ltCR&gt	
+
+"HTML OPERATIONS
+	"Match Tag On Line
+		map ,h &ltESC&gti&l&lt&gtg_a&gtltESC&gtyypa/&ltESC&gtkJi
+	"Match Tag And Format
+		map ,H &ltESC&gti&ltESC&gtg_a&gtltESC&gtyypa/&ltESC&gtO&ltTAB&gt  
+	"The idea of ^These^ is to take a single word on a line, and make it a html tag
+map ,n :set number!&ltCR&gt	"! means toggle. line numbers in this case
+map ,p :set paste!&ltCR&gt
+
+map &ltbuffer&gt ,s :set spell!&ltCR&gt
+map &ltbuffer&gt ,e :call ToggleEssayMode()&ltCR&gt
+	"note: ^these^ are defined in my plugins 
+map sp ]sz=
+"end of my .vimrc
+<hr>
+ready to start doing your own mapping? Read 
+<a href=http://stackoverflow.com/questions/3776117/what-is-the-difference-between-the-remap-noremap-nnoremap-and-vnoremap-mapping>
+this stackOverflow</a>
+(this page was made using vim, go figure)
+</pre>
+</body>
